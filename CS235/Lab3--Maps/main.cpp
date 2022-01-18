@@ -219,7 +219,7 @@ int main(int argc, char *argv[]){
 
 	//*********************    PART 6    *****************
 	cout << "\n\n\n" << endl;
-	const int M = 4;
+	const int M = 3;
 	map<list<string>, vector<string> > multiwordvectormap;
 	list<string> multistate;
 	for (int i = 0; i < M; i++){

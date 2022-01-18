@@ -1,0 +1,20 @@
+Queries:
+	yes
+	no
+	maybe
+	so
+Rules:he1lo!
+	#what about a comment?
+	'a string'
+	empty string: ''
+Facts:
+	*+
+	(?)
+	.,
+Schemes:$%
+
+hSchemes 3
+
+
+	'.,?'
+'alsduhaiuh
