@@ -18,3 +18,5 @@ hSchemes 3
 
 	'.,?'
 'alsduhaiuh
+multi line string'
+'laksjdgflaes'

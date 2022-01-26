@@ -58,7 +58,8 @@ public:
 			case STRING: return "STRING";
 			case COMMENT: return "COMMENT";
 			case UNDEFINED: return "UNDEFINED";
-			case END: return "END";
+			case END: return "EOF";
+			default: return "";
 		}
 	}
 

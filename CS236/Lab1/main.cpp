@@ -21,5 +21,5 @@ int main(int argc, char *argv[]) {
 	for(int i = 0; i < tokens.second; i++){
 		cout << tokens.first.at(i).toString() << endl;
 	}
-	cout << "Total Tokens = " << tokens.second << flush;
+	cout << "Total Tokens = " << tokens.second << endl;
 }

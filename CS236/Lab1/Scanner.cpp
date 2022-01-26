@@ -3,15 +3,17 @@
 Token Scanner::scanToken() {
 	tokenType type;
 	int size;
-	if(input.size() == 0){
-		return Token(END, "", line);
-	}
-	while(isspace(input.at(0))){
+	while(input.size() > 0 && isspace(input.at(0))){
 		if(input.at(0) == '\n'){
 			line++;
 		}
 		input = input.substr(1);
+
 	}
+	if(input.size() == 0){
+		return Token(END, "", line);
+	}
+	int myline = line;
 	switch(input.at(0)){
 		case ',':
 			type = COMMA;
@@ -81,18 +83,18 @@ Token Scanner::scanToken() {
 		type = UNDEFINED;
 	}
 	input = input.substr(size);
-	return Token(type, value, line);
+	return Token(type, value, myline);
 }
 
-// scans ahead to find the end of the string.
-// will return the size of the string
-// and returns 0 if the eof is reached before string ends
+
 int Scanner::scanString(){
 	int size = input.size();
 	int counter = 1;
 	while(counter < size){
 		if(input.at(counter) == '\''){
 			return ++counter;
+		}else if(input.at(counter) == '\n'){
+			line++;
 		}
 		counter++;
 	}
@@ -102,6 +104,9 @@ int Scanner::scanString(){
 int Scanner::scanID(){
 	int size = input.size();
 	int counter = 1;
+	if(!isalpha(input.at(0))){
+		return 1;
+	}
 	while(counter < size){
 		if(!isalnum(input.at(counter))){
 			return counter;
