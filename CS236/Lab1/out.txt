@@ -27,6 +27,8 @@
 (COLON,":",14)
 (UNDEFINED,"$",14)
 (UNDEFINED,"%",14)
+(UNDEFINED,"4",16)
+(UNDEFINED,"5",16)
 (ID,"hSchemes",16)
 (UNDEFINED,"3",16)
 (STRING,"'.,?'",19)
@@ -34,4 +36,4 @@
 multi line string'",20)
 (STRING,"'laksjdgflaes'",22)
 (EOF,"",22)
-Total Tokens = 35
+Total Tokens = 37

@@ -63,8 +63,12 @@ public:
 		}
 	}
 
-	tokenType get_type(){
+	tokenType get_type() const{
 		return type;
+	}
+
+	int get_line() const{
+		return line;
 	}
 	
 };

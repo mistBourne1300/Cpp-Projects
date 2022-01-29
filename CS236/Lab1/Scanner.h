@@ -16,14 +16,18 @@ class Scanner {
 private:
 	string input;
 	int line;
-	int scanString();
-	int scanID();
-	int scanColon();
-	int scanComment();
+	int scan_string();
+	int scan_ID();
+	int scan_colon();
+	int scan_comment();
 
 public:
-	Scanner(string input = "") : input(input), line(1){}
-	Token scanToken();
-	pair<vector<Token>, int> Scan();
-	bool readFile(string filename);
+	Scanner(string filename){
+		read_file(filename);
+		line = 1;
+	}
+
+	Token scan_token();
+	vector<Token> scan();
+	bool read_file(string filename);
 };

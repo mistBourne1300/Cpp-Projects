@@ -1,6 +1,6 @@
 #include "Scanner.h"
 
-Token Scanner::scanToken() {
+Token Scanner::scan_token() {
 	tokenType type;
 	int size;
 	while(input.size() > 0 && isspace(input.at(0))){
@@ -36,7 +36,7 @@ Token Scanner::scanToken() {
 			size = 1;
 			break;
 		case ':':
-			size = scanColon();
+			size = scan_colon();
 			if(size == 1){
 				type = COLON;
 			}else{
@@ -53,17 +53,17 @@ Token Scanner::scanToken() {
 			break;
 		case '\'':
 			type = STRING;
-			size = scanString();
+			size = scan_string();
 			if(size == 1){
 				type = UNDEFINED;
 			}
 			break;
 		case '#':
 			type = COMMENT;
-			size = scanComment();
+			size = scan_comment();
 			break;
 		default:
-			size = scanID();
+			size = scan_ID();
 			if(input.substr(0,size) == "Schemes"){
 				type = SCHEMES;
 			}else if(input.substr(0,size) == "Facts"){
@@ -87,7 +87,7 @@ Token Scanner::scanToken() {
 }
 
 
-int Scanner::scanString(){
+int Scanner::scan_string(){
 	int size = input.size();
 	int counter = 1;
 	while(counter < size){
@@ -101,7 +101,7 @@ int Scanner::scanString(){
 	return counter;
 }
 
-int Scanner::scanID(){
+int Scanner::scan_ID(){
 	int size = input.size();
 	int counter = 1;
 	if(!isalpha(input.at(0))){
@@ -116,7 +116,7 @@ int Scanner::scanID(){
 	return counter;
 }
 
-int Scanner::scanColon(){
+int Scanner::scan_colon(){
 	if(input.size() == 1){
 		return 1;
 	}
@@ -127,7 +127,7 @@ int Scanner::scanColon(){
 	}
 }
 
-int Scanner::scanComment(){
+int Scanner::scan_comment(){
 	int size = input.size();
 	int counter = 1;
 	while(counter < size){
@@ -139,21 +139,21 @@ int Scanner::scanComment(){
 	return counter;
 }
 
-pair<vector<Token>, int> Scanner::Scan(){
+vector<Token> Scanner::scan(){
 	vector<Token> tokens;
 	bool cont = true;
 	while(cont){
-		Token t = scanToken();
+		Token t = scan_token();
 		if(t.get_type() == END){
 			cont = false;
 		}
 		tokens.push_back(t);
 	}
 
-	return make_pair(tokens, tokens.size());
+	return tokens;
 }
 
-bool Scanner::readFile(string filename){
+bool Scanner::read_file(string filename){
 	ifstream ifs;
 	ifs.open(filename);
 	if(!ifs.is_open()){
