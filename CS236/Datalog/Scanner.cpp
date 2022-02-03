@@ -83,6 +83,9 @@ Token Scanner::scan_token() {
 		type = UNDEFINED;
 	}
 	input = input.substr(size);
+	if(type == COMMENT){
+		return scan_token();
+	}
 	return Token(type, value, myline);
 }
 

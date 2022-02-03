@@ -70,5 +70,9 @@ public:
 	int get_line() const{
 		return line;
 	}
+
+	string get_value(){
+		return tolkien;
+	}
 	
 };

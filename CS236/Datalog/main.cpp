@@ -25,10 +25,11 @@ int main(int argc, char *argv[]) {
 	// cout << "Total Tokens = " << tokens.size() << endl;
 
   Parser p = Parser(argv[1]);
-  if(p.parse()){
-    cout << "success!" << endl;
+  if(p.true_parse()){
+    cout << "Success!" << endl;
+	cout << p.toString();
   }else{
-    cout << "uh oh" << endl;
+    // cout << "uh oh" << endl;
   }
 }
 
