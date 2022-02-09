@@ -53,10 +53,10 @@ public:
 		prog_rules = r;
 		prog_queries = q;
 
-		for(int i = 0; i < prog_facts.size(); i++){
+		for(unsigned int i = 0; i < prog_facts.size(); i++){
 			// for each fact
 			vector<Parameter> params = prog_facts.at(i).get_parameters();
-			for(int j = 0; j < params.size(); j++){
+			for(unsigned int j = 0; j < params.size(); j++){
 				// for each parameter in fact insert the string of that parameter into the domain
 				domain.insert(params.at(j).toString());
 			}

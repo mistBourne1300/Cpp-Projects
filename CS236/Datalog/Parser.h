@@ -13,7 +13,6 @@ private:
 	bool parsed_true;
 public:
 	Parser(string filename){
-// cout << "accessed Parser()" << endl;
 		tokens = Scanner(filename).scan();
 		// for(unsigned int i = 0; i < tokens.size(); i++){
 		// 	cout << tokens.at(i).toString() << endl;
@@ -22,7 +21,6 @@ public:
 	}
 
 	bool parse(){
-// cout << "accessed parse()" << endl;
 		try{
 			datalog_program();
 		}catch(string msg){
@@ -33,17 +31,14 @@ public:
 	}
 
 	tokenType token_type() const{
-// cout << "accessed token_type()" << endl;
 		return tokens.at(0).get_type();
 	}
 
 	void advance_token(){
-// cout << "accessed advance_token()" << endl;
 		tokens.erase(tokens.begin());
 	}
 
 	void throw_error(){
-// cout << "accessed throw_error()" << endl;
 		stringstream ss;
 		Token err_token = tokens.at(0);
 		ss << "Failure!" << endl << "  " << err_token.toString() << endl;
@@ -56,8 +51,7 @@ public:
 			returns the old first token
 			throws an error if the token types do not match
 		*/
-// Token test(t, "test",0);
-// cout << "accessed match(" << tokens.at(0).toString() << ")" << endl;
+
 		Token old = tokens.at(0);
 		if(token_type() == t){
 			advance_token();
@@ -78,7 +72,7 @@ public:
 			returns nothing
 			but will initialize the class variable program
 		*/
-// cout << "accessed datalog_program()" << endl;
+
 		vector<Predicate> schemes;
 		match(SCHEMES);
 		match(COLON);
@@ -119,7 +113,7 @@ public:
 			returns nothing
 			but appends the next scheme to the vector
 		*/
-// cout << "accessed scheme_list()" << endl;
+
 		if(token_type() == ID){
 			// call scheme, which returns a Predcate object, and push it onto the vector
 			schemes.push_back(scheme());
@@ -137,7 +131,7 @@ public:
 			returns nothing
 			but appends the next fact to the vector
 		*/
-// cout << "accessed fact_list()" << endl;
+
 		if(token_type() == ID){
 			// call fact, which returns a Predicate object, and push it onto the vector
 			facts.push_back(fact());
@@ -155,7 +149,7 @@ public:
 			returns nothing
 			but appends the next rule to the vector
 		*/
-// cout << "accessed rule_list()" << endl;
+
 		if(token_type() == ID){
 			// call rule, which returns a Rule, and push that onto the vector.
 			rules.push_back(rule());
@@ -173,7 +167,7 @@ public:
 			returns nothing
 			but appends the next query to the vector
 		*/
-// cout << "accessed query_list()" << endl;
+
 		if(token_type() == ID){
 			// call query, which returns a Predicate, and push that onto the vector
 			queries.push_back(query());
@@ -190,7 +184,6 @@ public:
 			accepts nothing
 			returns the scheme that corresponds to the next few tokens
 		*/
-// cout << "accessed scheme()" << endl;
 
 		// match will return the token corresponding to the ID.
 		// we need to get the string of that id and save it to the Predicate object
@@ -220,7 +213,7 @@ public:
 			accepts nothing
 			returns the fact that corresponds to the next few tokens
 		*/
-// cout << "accessed fact()" << endl;
+
 		// match will return the token corresponding to the ID.
 		// we need to get the string of that id and save it to the Predicate object
 		Predicate new_fact(match(ID).get_value());
@@ -249,7 +242,7 @@ public:
 			accepts nothing
 			returns the rule that corresponds to the next few tokens
 		*/
-// cout << "accessed rule()" << endl;
+
 		Rule new_rule(head_predicate());
 		match(COLON_DASH);
 
@@ -272,7 +265,7 @@ public:
 			accepts nothing
 			returns the query that corresponds to the next few tokens
 		*/
-// cout << "accessed query()" << endl;
+
 		// predicate returns a Predicate object corresponding to the query in question.
 		// I would love to just return this in one line, but we need to clear the Q_MARK before returning.
 		Predicate new_query = predicate();
@@ -286,7 +279,7 @@ public:
 			accepts nothing
 			returns the predicate that corresponds to the next few tokens
 		*/
-// cout << "accessed head_predicate()" << endl;
+
 		// match will return the token corresponding to the ID.
 		// we need to get the string of that id and save it to the Predicate object
 		Predicate head_pred(match(ID).get_value());
@@ -311,7 +304,7 @@ public:
 			accepts nothing
 			returns the predicate that corresponds to the next few tokens
 		*/
-// cout << "accessed predicate()" << endl;
+
 		// match will return the token corresponding to the ID.
 		// we need to get the string of that id and save it to the Predicate object
 		Predicate new_pred(match(ID).get_value());
@@ -336,7 +329,7 @@ public:
 			returns nothing
 			but appends the predicates to the list recursively
 		*/
-// cout << "accessed predicate_list()" << endl;
+
 		if(token_type() == COMMA){
 			match(COMMA);
 			// call predicate, which returns a predicate data type, and push that onto the vector
@@ -354,7 +347,7 @@ public:
 			returns nothing
 			but appends the next parameter to the vector
 		*/
-// cout << "accessed parameter_list()" << endl;
+
 		if(token_type() == COMMA){
 			match(COMMA);
 			// call parameter, which returns a parameter data type, and push that onto the vector
@@ -372,7 +365,7 @@ public:
 			returns nothing
 			but appends the next string to the vector
 		*/
-// cout << "accessed string_list()" << endl;
+
 		if(token_type() == COMMA){
 			match(COMMA);
 			// match a STRING, create a new parameter, and push it onto the string vector
@@ -390,7 +383,7 @@ public:
 			returns nothing
 			but appends the next ID to the vector
 		*/
-// cout << "accessed id_list()" << endl;
+
 		if(token_type() == COMMA){
 			match(COMMA);
 			// match an ID, create a new parameter, and push it onto the id vector
@@ -407,7 +400,7 @@ public:
 			accepts nothing
 			returns the parameter corresponding the the next few tokens
 		*/
-// cout << "accessed parameter()" << endl;
+
 		Parameter new_param(Token(STRING, "something went wrong", 0));
 		if(token_type() == STRING){
 			// match the token, get the old one, and initialize a parameter to return
@@ -422,7 +415,6 @@ public:
 	}
 
 	string toString(){
-// cout << "accessed Parser::toString()" << endl;
 		return program.toString();
 	}
 	
