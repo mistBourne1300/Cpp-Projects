@@ -66,7 +66,7 @@ public:
 		        			RULES COLON ruleList
 		        			QUERIES COLON query queryList
 							END*/
-	void datalog_program(){
+	void datalog_program(){ 
 		/*
 			accepts nothing
 			returns nothing
@@ -417,7 +417,6 @@ public:
 	string toString(){
 		return program.toString();
 	}
-	
 
 	bool true_parse(){
 		return parsed_true;
