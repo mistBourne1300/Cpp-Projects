@@ -1,16 +1,16 @@
-#pragma once
+# pragma once
 
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <cctype>
-#include <fstream>
-#include <vector>
-#include <utility>
+# include <iostream>
+# include <string>
+# include <sstream>
+# include <cctype>
+# include <fstream>
+# include <vector>
+# include <utility>
 
 using namespace std;
 
-#include "Token.h"
+# include "Token.h"
 
 class Scanner {
 private:
@@ -20,6 +20,8 @@ private:
 	int scan_ID();
 	int scan_colon();
 	int scan_comment();
+	Token scan_token();
+	bool read_file(string filename);
 
 public:
 	Scanner(string filename){
@@ -27,7 +29,6 @@ public:
 		line = 1;
 	}
 
-	Token scan_token();
+
 	vector<Token> scan();
-	bool read_file(string filename);
 };

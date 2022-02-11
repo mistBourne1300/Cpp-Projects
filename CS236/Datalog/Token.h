@@ -31,14 +31,6 @@ private:
 	tokenType type;
 	string tolkien;
 	int line;
-
-public:
-	Token(tokenType type, string tolkien, int line) : type(type), tolkien(tolkien), line(line){}
-	string toString(){
-		stringstream out;
-		out << "(" << enum_to_string() << ",\"" << tolkien << "\"," << line << ")";
-		return out.str();
-	}
 	string enum_to_string(){
 		switch(type){
 			case COMMA: return "COMMA";
@@ -63,6 +55,14 @@ public:
 		}
 	}
 
+public:
+	Token(tokenType type, string tolkien, int line) : type(type), tolkien(tolkien), line(line){}
+	string toString(){
+		stringstream out;
+		out << "(" << enum_to_string() << ",\"" << tolkien << "\"," << line << ")";
+		return out.str();
+	}
+	
 	tokenType get_type() const{
 		return type;
 	}

@@ -4,21 +4,13 @@
 using namespace std;
 
 # include "Scanner.h"
-# include "include.h"
+# include "Datalog_Program.h"
 
 class Parser{
 private:
 	vector<Token> tokens;
 	Datalog_Program program;
 	bool parsed_true;
-public:
-	Parser(string filename){
-		tokens = Scanner(filename).scan();
-		// for(unsigned int i = 0; i < tokens.size(); i++){
-		// 	cout << tokens.at(i).toString() << endl;
-		// }
-		parsed_true = parse();
-	}
 
 	bool parse(){
 		try{
@@ -412,6 +404,15 @@ public:
 			throw_error();
 		}
 		return new_param;
+	}
+
+public:
+	Parser(string filename){
+		tokens = Scanner(filename).scan();
+		// for(unsigned int i = 0; i < tokens.size(); i++){
+		// 	cout << tokens.at(i).toString() << endl;
+		// }
+		parsed_true = parse();
 	}
 
 	string toString(){
