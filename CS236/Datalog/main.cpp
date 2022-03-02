@@ -13,7 +13,7 @@ int main(){
 	vector<string> names = {"ID","Name","Major"};
 	Scheme scheme(names);
 	Relation relation("student", scheme);
-	vector<vector<string>> values = {
+	vector<vector<string> > values = {
 		{"'42'", "'Ann'", "'CS'"},
 		{"'32'", "'Bob'", "'CS'"},
 		{"'64'", "'Ned'", "'EE'"},
