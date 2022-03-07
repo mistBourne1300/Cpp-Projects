@@ -33,20 +33,13 @@ Domain(6):
 
 class Datalog_Program {
 private:
+	set<string> domain;
 	vector<Predicate> prog_schemes;
 	vector<Predicate> prog_facts;
 	vector<Rule> prog_rules;
 	vector<Predicate> prog_queries;
-	// TODO: create domain vector and initialize it inside the initializer funtion
-	// the domain is every string in the facts parameters, not anything else. A set should work nicely
-	set<string> domain;
 public:
-
-	// Datalog_Program(vector<Predicate> s, vector<Predicate> f, vector<Rule> r, vector<Predicate> q/*, vector<Parameter> d*/) : prog_schemes(s), prog_facts(f), prog_rules(r), prog_queries(q){
-	// 	// domain = d
-	// 	// sort(domain.begin(), domain.end())
-	// }
-
+	
 	void initialize(vector<Predicate> s, vector<Predicate> f, vector<Rule> r, vector<Predicate> q/*, vector<Parameter> d*/){
 		prog_schemes = s;
 		prog_facts = f;
@@ -94,5 +87,9 @@ public:
 
 	}
 
+	vector<Predicate> get_schemes() {return prog_schemes;}
+	vector<Predicate> get_facts() {return prog_facts;}
+	vector<Rule> get_rules() {return prog_rules;}
+	vector<Predicate> get_queries() {return prog_queries;}
 };
 

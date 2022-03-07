@@ -1,2 +1,2 @@
 UNTITLED: main.cpp
-	g++ -o untitled main.cpp
+	g++ -Wall -Werror -std=c++17 -g *.cpp -o test

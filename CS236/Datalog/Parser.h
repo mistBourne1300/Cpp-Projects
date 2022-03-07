@@ -393,7 +393,7 @@ private:
 			returns the parameter corresponding the the next few tokens
 		*/
 
-		Parameter new_param(Token(STRING, "something went wrong", 0));
+		Parameter new_param(Token(END, "something went wrong", 0));
 		if(token_type() == STRING){
 			// match the token, get the old one, and initialize a parameter to return
 			new_param.set_value(match(STRING));
@@ -421,5 +421,9 @@ public:
 
 	bool true_parse(){
 		return parsed_true;
+	}
+
+	Datalog_Program get_program(){
+		return program;
 	}
 };

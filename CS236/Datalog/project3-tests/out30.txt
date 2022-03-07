@@ -1,0 +1,11 @@
+SK(X,'c')? Yes(2)
+  X='a'
+  X='b'
+SK('b','c')? Yes(1)
+SK(X,X)? Yes(1)
+  X='b'
+SK(X,Y)? Yes(3)
+  X='a', Y='c'
+  X='b', Y='b'
+  X='b', Y='c'
+SK('c','c')? No

@@ -8,31 +8,57 @@ using namespace std;
 # include "Scheme.h"
 # include "Tuple.h"
 # include "Relation.h"
+# include "Database.h"
 
-int main(){
-	vector<string> names = {"ID","Name","Major"};
-	Scheme scheme(names);
-	Relation relation("student", scheme);
-	vector<vector<string> > values = {
-		{"'42'", "'Ann'", "'CS'"},
-		{"'32'", "'Bob'", "'CS'"},
-		{"'64'", "'Ned'", "'EE'"},
-		{"'16'", "'Jim'", "'EE'"}
-	};
-
-	for(vector<string> value : values){
-		Tuple tuple(value);
-		cout << tuple.toString(scheme) << endl;
-		relation.add_tuple(tuple);
+int main(int argc, char *argv[]){
+	if(argc < 2){
+		cout << "database requires at least one argument <filename>" << endl;
+		return 1;
 	}
 
-	cout << "relation:" << endl;
-	cout << relation.toString();
+	Database death_star(argv[1]);
+	if(!death_star.get_success()){
+		cout << "failed to parse file. exiting." << endl;
+		return 1;
+	}
+	cout << death_star.evaluate();
 
-	Relation result = relation.select(2,"'CS'");
-	cout << "select Major='CS' result:" << endl;
-	cout << result.toString();
 }
+
+
+// What about that shadowed area? That is old code. Never venture there, my son. 
+// int main(){
+// 	vector<string> names = {"a","b","c","d","e"};
+// 	Scheme scheme(names);
+// 	Relation relation("student", scheme);
+// 	vector<vector<string> > values = {
+// 		{"2","2","4","4","4"},
+// 		{"2","2","4","2","2"}
+// 	};
+
+// 	for(vector<string> value : values){
+// 		Tuple tuple(value);
+// 		relation.add_tuple(tuple);
+// 	}
+
+// 	cout << "relation:" << endl;
+// 	cout << relation.toString() << endl;
+
+// 	vector<int> indices = {0,1,3,4};
+// 	relation = relation.select_similar(indices);
+// 	cout << "selected similar" << endl;
+// 	cout << relation.toString() << endl;;
+
+// 	vector<string> re = {"z", "z", "x", "z", "z"};
+// 	relation = relation.rename(names, re);
+// 	cout << "renamed:" << endl;
+// 	cout << relation.toString() << endl;
+
+// 	relation = relation.projector(re);
+// 	cout << "projected:" << endl;
+// 	cout << relation.toString() << endl;
+
+// }
 
 
 

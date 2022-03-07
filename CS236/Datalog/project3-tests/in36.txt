@@ -1,0 +1,16 @@
+
+
+# Variable name in query different from name in scheme.
+
+Schemes:
+  bob(A)
+
+Facts:
+  bob('a').
+
+Rules:
+
+Queries:
+  bob(X)?
+
+

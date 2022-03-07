@@ -1,0 +1,15 @@
+
+
+# Query on a predicate with no facts.
+
+Schemes:
+  bob(A)
+
+Facts:
+
+Rules:
+
+Queries:
+  bob(A)?
+
+
