@@ -33,6 +33,25 @@ private:
 
 public:
     Relation(const string& name, const Scheme& scheme) : name(name), scheme(scheme) {}
+
+    static bool joinable(const Scheme& left_scheme, const Scheme& right_scheme, const Tuple& left_tuple, const Tuple& right_tuple){
+        for (unsigned left_index = 0; left_index < left_scheme.size(); left_index++) {
+            const string& left_name = left_scheme.at(left_index);
+            const string& left_value = left_tuple.at(left_index);
+            cout << "left name: " << left_name << " value: " << left_value << endl;
+            for (unsigned right_index = 0; right_index < right_scheme.size(); right_index++) {
+                const string& right_name = right_scheme.at(right_index);
+                const string& right_value = right_tuple.at(right_index);
+                cout << "\tright name: " << right_name << " value: " << right_value << endl;
+                if(left_name == right_name && left_value != right_value){
+                    cout << "\t\t^^ Not joinable." << endl;
+                    return false;
+                }
+            }
+        }
+        
+        return true;
+    }
     
     void add_tuple(const Tuple& tuple) {
         tuples.insert(tuple);
@@ -131,7 +150,21 @@ public:
         return result;
     }
 
-    string get_name() {return name;}
-    Scheme get_scheme() {return scheme;}
+    Relation join(const Relation& r){
+        const Scheme& left_scheme = scheme;
+        const Scheme& right_scheme = r.get_scheme();
+        for(const Tuple& left_tuple : tuples){
+            cout << "left tuple: " << left_tuple.toString(left_scheme) << endl;
+            for(const Tuple& right_tuple : r.get_tuples()){
+                cout << "\tright tuple: " << right_tuple.toString(right_scheme) << endl;
+            }
+        }
+        
+        return Relation(name, scheme);
+    }
+    
+    set<Tuple> get_tuples() const {return tuples;}
+    string get_name() const {return name;}
+    Scheme get_scheme() const {return scheme;}
     int size() {return tuples.size();}
 };

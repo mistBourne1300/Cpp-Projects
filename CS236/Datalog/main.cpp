@@ -10,23 +10,81 @@ using namespace std;
 # include "Relation.h"
 # include "Database.h"
 
-int main(int argc, char *argv[]){
-	if(argc < 2){
-		cout << "database requires at least one argument <filename>" << endl;
-		return 1;
-	}
 
-	Database death_star(argv[1]);
-	if(!death_star.get_success()){
-		cout << "failed to parse file. exiting." << endl;
-		return 1;
-	}
-	cout << death_star.evaluate();
+int main() {
+
+	Relation studentRelation("students", Scheme( {"ID", "Name", "Major"} ));
+
+	vector<string> studentValues[] = {
+		{"'42'", "'Ann'", "'CS'"},
+		{"'64'", "'Ned'", "'EE'"},
+	};
+
+	for (auto& value : studentValues) studentRelation.add_tuple(Tuple(value));
+
+	Relation courseRelation("courses", Scheme( {"ID", "Course"} ));
+
+	vector<string> courseValues[] = {
+		{"'42'", "'CS 100'"},
+		{"'32'", "'CS 232'"},
+	};
+
+	for (auto& value : courseValues) courseRelation.add_tuple(Tuple(value));
+
+	studentRelation.join(courseRelation);
 
 }
 
 
+// test code for the joinable function
+// int main() {
+
+// 	Scheme scheme1( { "A", "B" } );
+// 	Scheme scheme2( { "B", "C" } );
+
+// 	Tuple tuple1( {"'1'", "'2'"} );
+// 	Tuple tuple2( {"'3'", "'4'"} );
+
+// 	Scheme scheme3( { "X", "Y" } );
+// 	Scheme scheme4( { "X", "Y", "Z" } );
+
+// 	Tuple tuple3( {"'1'", "'4'"} );
+// 	Tuple tuple4( {"'1'", "'2'", "'4'"} );
+
+
+// 	cout << "Testing Scheme1 : Scheme 2; tuple 1 : tuple 2" << endl;
+// 	cout << Relation::joinable(scheme1, scheme2, tuple1, tuple2) << endl;
+
+// 	cout << "Testing Scheme 2 : Scheme 3; tuple 1 : tuple 2" << endl;
+// 	cout << Relation::joinable(scheme2, scheme3, tuple1, tuple2) << endl;
+
+// 	cout << "Testing Scheme 3 : Scheme 4; tuple 1 : tuple 4" << endl;
+// 	cout << Relation::joinable(scheme3, scheme4, tuple1, tuple4) << endl;
+
+// 	cout << "Testing Scheme 3 : Scheme 4; tuple 3 : tuple 4" << endl;
+// 	cout << Relation::joinable(scheme3, scheme4, tuple3, tuple4) << endl;
+
+// }
+
+
 // What about that shadowed area? That is old code. Never venture there, my son. 
+// int main(int argc, char *argv[]){
+// 	if(argc < 2){
+// 		cout << "database requires at least one argument <filename>" << endl;
+// 		return 1;
+// 	}
+
+// 	Database death_star(argv[1]);
+// 	if(!death_star.get_success()){
+// 		cout << "failed to parse file. exiting." << endl;
+// 		return 1;
+// 	}
+// 	cout << death_star.evaluate();
+
+// }
+
+
+ 
 // int main(){
 // 	vector<string> names = {"a","b","c","d","e"};
 // 	Scheme scheme(names);
