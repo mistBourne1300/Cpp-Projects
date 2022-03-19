@@ -14,21 +14,37 @@ private:
     Scheme scheme;
     set<Tuple> tuples;
 
+    bool contains(vector<string> vect, string item){
+        for(string s: vect){
+            if(s==item){
+                return true;
+            }
+        }
+        return false;
+    }
+
     vector<string> get_unique(vector<string> vect){
         vector<string> unique;
         for(string s : vect){
-            bool found = false;
-            for(string v : unique){
-                if(s == v){
-                    found = true;
-                    break;
-                }
-            }
-            if(!found){
+            if(!contains(unique,s)){
                 unique.push_back(s);
             }
         }
         return unique;
+    }
+
+    Tuple join_tuples(const Scheme& left_scheme, const Scheme& right_scheme, const Tuple& left_tuple, const Tuple& right_tuple){
+        // create a new tuple vector and initialize it with a copy of the left tuple (to match the way the Schemes are made)
+        vector<string> new_tuple_vect = left_tuple;
+        
+        // for each item in the right tuple, if the left scheme does not contain the
+        // corresponding right scheme's parameter, add the item to the new tuple
+        for(unsigned int i = 0; i<right_tuple.size(); i++){
+            if(!contains(left_scheme, right_scheme.at(i))){
+                new_tuple_vect.push_back(right_tuple.at(i));
+            }
+        }
+        return Tuple(new_tuple_vect);
     }
 
 public:
@@ -53,8 +69,8 @@ public:
         return true;
     }
     
-    void add_tuple(const Tuple& tuple) {
-        tuples.insert(tuple);
+    bool add_tuple(const Tuple& tuple) {
+        return tuples.insert(tuple).second;
     }
 
     string toString() const{
@@ -93,7 +109,7 @@ public:
         return result;
     }
 
-    Relation projector(vector<string> cols){
+    Relation projection(vector<string> cols){
         cols = get_unique(cols);
         vector<unsigned int> indices;
         for(string col : cols){
@@ -120,29 +136,19 @@ public:
 
     Relation rename(vector<string> old, vector<string> re){
         if(old.size() != re.size()){
-            //cout << "rename() function requires old and re to be the same size" << endl;
+            cout << "rename() function requires old and re to be the same size" << endl;
             throw "rename() function requires old and re to be the same size";
         }
-        // cout << "inside rename()" << endl;
 
         Scheme relabeled = scheme;
         for(unsigned int i = 0; i < old.size(); i++){
             for(unsigned int j = i; j < relabeled.size(); j++){
                 if(old.at(i) == relabeled.at(j)){
-                    // cout << "  " << relabeled[j] << re.at(i) << endl;
                     relabeled[j] = re.at(i);
                 }
             }
         }
 
-        // for(unsigned int i = 0; i < relabeled.size(); i++){
-        //     for(unsigned int j = i; j < old.size(); j++){
-        //         if(old.at(j) == relabeled.at(i)){
-        //             cout << "  " << relabeled[i] << re.at(j) << endl;
-        //             relabeled[i] = re.at(j);
-        //         }
-        //     }
-        // }
         Relation result(name, relabeled);
         for(Tuple tuple : tuples){
             result.add_tuple(tuple);
@@ -153,14 +159,30 @@ public:
     Relation join(const Relation& r){
         const Scheme& left_scheme = scheme;
         const Scheme& right_scheme = r.get_scheme();
+
+
+        // create a new scheme from the left scheme, then push back the unique right_scheme strings
+        vector<string> new_scheme_vect = left_scheme;
+        for(string s : right_scheme){
+            if(!contains(new_scheme_vect,s)){
+                new_scheme_vect.push_back(s);
+            }
+        }
+
+        Relation joined(name, Scheme(new_scheme_vect));
+
+        // for each tuple, add it to the relation, if they are joinable
         for(const Tuple& left_tuple : tuples){
             cout << "left tuple: " << left_tuple.toString(left_scheme) << endl;
             for(const Tuple& right_tuple : r.get_tuples()){
                 cout << "\tright tuple: " << right_tuple.toString(right_scheme) << endl;
+                if(joinable(left_scheme, right_scheme, left_tuple, right_tuple)){
+                    joined.add_tuple(join_tuples(left_scheme, right_scheme, left_tuple, right_tuple));
+                }
             }
         }
         
-        return Relation(name, scheme);
+        return joined;
     }
     
     set<Tuple> get_tuples() const {return tuples;}

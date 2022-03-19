@@ -11,29 +11,38 @@ using namespace std;
 # include "Database.h"
 
 
-int main() {
+// int main() {
 
-	Relation studentRelation("students", Scheme( {"ID", "Name", "Major"} ));
+// 	Relation studentRelation("students", Scheme( {"ID", "Name", "Major"} ));
 
-	vector<string> studentValues[] = {
-		{"'42'", "'Ann'", "'CS'"},
-		{"'64'", "'Ned'", "'EE'"},
-	};
+// 	vector<string> studentValues[] = {
+// 		{"'42'", "'Ann'", "'CS'"},
+// 		{"'64'", "'Ned'", "'EE'"},
+// 	};
 
-	for (auto& value : studentValues) studentRelation.add_tuple(Tuple(value));
+// 	for (auto& value : studentValues) studentRelation.add_tuple(Tuple(value));
 
-	Relation courseRelation("courses", Scheme( {"ID", "Course"} ));
+// 	Relation courseRelation("courses", Scheme( {"ID", "Course"} ));
 
-	vector<string> courseValues[] = {
-		{"'42'", "'CS 100'"},
-		{"'32'", "'CS 232'"},
-	};
+// 	vector<string> courseValues[] = {
+// 		{"'42'", "'CS 100'"},
+// 		{"'32'", "'CS 232'"},
+// 	};
 
-	for (auto& value : courseValues) courseRelation.add_tuple(Tuple(value));
+// 	for (auto& value : courseValues) courseRelation.add_tuple(Tuple(value));
 
-	studentRelation.join(courseRelation);
+// 	Relation rel_new = studentRelation.join(courseRelation);
 
-}
+// 	cout << "joined relation:\n" << rel_new.toString() << endl << endl;
+
+// 	vector<string> reorder = {"Course", "Name", "ID", "Major"};
+
+// 	cout << reorder.size() << endl;
+
+// 	cout << "reordering columns:\n" << rel_new.projector(reorder).toString() << endl;
+
+
+// }
 
 
 // test code for the joinable function
@@ -68,20 +77,20 @@ int main() {
 
 
 // What about that shadowed area? That is old code. Never venture there, my son. 
-// int main(int argc, char *argv[]){
-// 	if(argc < 2){
-// 		cout << "database requires at least one argument <filename>" << endl;
-// 		return 1;
-// 	}
+int main(int argc, char *argv[]){
+	if(argc < 2){
+		cout << "database requires at least one argument <filename>" << endl;
+		return 1;
+	}
 
-// 	Database death_star(argv[1]);
-// 	if(!death_star.get_success()){
-// 		cout << "failed to parse file. exiting." << endl;
-// 		return 1;
-// 	}
-// 	cout << death_star.evaluate();
+	Database death_star(argv[1]);
+	if(!death_star.get_success()){
+		cout << "failed to parse file. exiting." << endl;
+		return 1;
+	}
+	cout << death_star.evaluate_all();
 
-// }
+}
 
 
  

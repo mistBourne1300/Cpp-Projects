@@ -70,7 +70,7 @@ public:
 
 		ss << "Rules(" << prog_rules.size() << "):\n";
 		for(unsigned int i = 0; i < prog_rules.size(); i++){
-			ss << "  " << prog_rules.at(i).toString() << "." << endl;
+			ss << "  " << prog_rules.at(i).toString() << endl;
 		}
 
 		ss << "Queries(" << prog_queries.size() << "):\n";

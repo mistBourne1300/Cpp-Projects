@@ -29,6 +29,10 @@ public:
 				ss << ",";
 			}
 		}
+		ss << ".";
 		return ss.str();
 	}
+
+	vector<Predicate> get_body() {return body;}
+	Predicate get_head() {return head;}
 };
