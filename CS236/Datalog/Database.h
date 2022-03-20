@@ -13,24 +13,36 @@ private:
 	vector<Relation> family;
 	Datalog_Program program;
 	bool success;
-	int num_passes;
 
-	Relation get_relation(string name){
-		for(Relation rel : family){
-			if(name == rel.get_name()){
-				return rel;
+	Relation& get_relation(string name){
+		for(unsigned int i = 0; i < family.size(); i++){
+			if(name == family.at(i).get_name()){
+				return family.at(i);
 			}
 		}
 		return family.at(0);
 	}
 
+	Predicate get_scheme(string name){
+		vector<Predicate> schemes = program.get_schemes();
+		for(Predicate s : schemes){
+			if(s.get_name() == name){
+				return s;
+			}
+		}
+		return schemes.at(0);
+	}
+
 	// loop through the rules adding tuples to the relations as needed.
 	// terminate when no new tuples are added to any relation in the family.
-	int parse_rules(){
+	string parse_rules(){
+		stringstream out;
 		bool done;
 		vector<Relation> rule_relations;
 		vector<string> cols;
 		int counter = 0;
+
+		out << "Rule Evaluation" << endl;
 
 		// loop through the rules, adding tuples to the relations
 		// until no relation changes
@@ -41,12 +53,13 @@ private:
 			
 			// for each rule in the program
 			for(Rule rule : program.get_rules()){
+				out << rule.toString() << endl;
 				Predicate head = rule.get_head();
 				
 				// evaluate the body of the rule, pushing back the
 				// evaluated arguments to the rule relations vector
 				for(Predicate arg : rule.get_body()){
-					rule_relations.push_back(evaluate(arg));
+					rule_relations.push_back(evaluate(arg).first);
 				}
 
 				// while we have more than one relation in the vector
@@ -58,7 +71,7 @@ private:
 				}
 
 				// for ease of readability, create new relation result
-				// and clear the rule relations vector for better(ish) spatial coplexity
+				// and clear the rule relations vector for better(ish) spatial complexity
 				Relation result = rule_relations.at(0);
 				rule_relations.clear();
 				
@@ -68,42 +81,52 @@ private:
 					cols.push_back(param.toString());
 				}
 
-				// find the projection then
-				// clear the columns for better(ish) spatial complexity
+				// find the projection
 				result = result.projection(cols);
-				cols.clear();
 
 				// get the appropriate relation to add to
 				// using get_relation()
-				Relation to_add_to = get_relation(head.get_name());	
+				Relation& to_add_to = get_relation(head.get_name());
+				Predicate scheme_in_question = get_scheme(head.get_name());
+				vector<string> new_scheme;
+				for(Parameter p : scheme_in_question.get_parameters()){
+					new_scheme.push_back(p.toString());
+				}
 
 				// add each tuple to the relation, checking to see if it is actually added
-				// if it is, set done to false, there are more tuples to evaluate			
+				// if it is, set done to false, there are more tuples to evaluate
+				// and add the tuple's toString to the
 				for(Tuple t : result.get_tuples()){
 					if(to_add_to.add_tuple(t)){
+						out << "  " << t.toString(new_scheme) << endl;
 						done = false;
 					}
 				}
+				// clear the cols for the next pass through
+				cols.clear();
 			}
 
 			// up the counter by one
 			counter++;
 		}while(!done);
-		return counter;
+		out << "\nSchemes populated after " << counter << " passes through the Rules." << endl << endl;
+		return out.str();
 	}
 
 	// evaluates the specified query and returns the resulting relation in a pair
 	// with a boolean for whether the query contained a variable
-	Relation evaluate(Predicate query){
+	pair<Relation,bool> evaluate(Predicate query){
 		bool has_variable = false;
 		Relation eval = get_relation(query.get_name());
 
 
 		vector<string> old;
 		vector<string> rename;
+		vector<int> ignore;
 		for(unsigned int i = 0; i < query.get_parameters().size(); i++){
 			Token next = query.get_parameters().at(i).get_value();
 			if(next.get_type() == STRING){
+				ignore.push_back(i);
 				eval = eval.select(i, next.get_value());
 			} else if (next.get_type() == ID){
 				has_variable = true;
@@ -125,14 +148,12 @@ private:
 			eval = eval.select_similar(indices);
 		}
 
-		for(unsigned int i = 0; i < old.size(); i++){
-		}
 		if(has_variable){
 			eval = eval.rename(old, rename);
-			eval = eval.projection(rename);
+			eval = eval.projection(rename,ignore);
 		}
-
-		return eval;
+		pair<Relation, bool> p(eval, has_variable);
+		return p;
 	}
 
 public:
@@ -173,7 +194,6 @@ public:
 		}
 
 	success = true;
-	num_passes = parse_rules();
 	}
 
 	string evaluate_queries(){
@@ -182,13 +202,15 @@ public:
 		for(Predicate query : program.get_queries()){
 
 			out << query.toString() << "? ";
-
-			Relation eval = evaluate(query);
-			// bool has_variable = eval_var.second;
+			pair<Relation,bool> eval_var = evaluate(query);
+			Relation eval = eval_var.first;
+			bool has_variable = eval_var.second;
 			
 			if(eval.size() > 0){
 				out << "Yes(" << eval.size() << ")" << endl;
-				out << eval.toString();
+				if(has_variable){
+					out << eval.toString();
+				}
 			} else{
 				out << "No" << endl;
 			}
@@ -197,16 +219,18 @@ public:
 	}
 
 	string evaluate_rules(){
-		stringstream out;
-		out << "Rule Evaluation" << endl;
-		for(Rule rule : program.get_rules()){
-			out << rule.toString() << endl;
-			Predicate head = rule.get_head();
-			Relation eval = evaluate(head);
-			out << eval.toString();
-		}
-		out << "\nSchemes populated after " << num_passes << " passes through the Rules." << endl << endl;
-		return out.str();
+		// I think this is more elegant, but the spec says to print out each rule evaluation as it happens
+		// stringstream out;
+		// out << "Rule Evaluation" << endl;
+		// for(Rule rule : program.get_rules()){
+		// 	out << rule.toString() << endl;
+		// 	Predicate head = rule.get_head();
+		// 	Relation eval = evaluate(head);
+		// 	out << eval.toString();
+		// }
+		// out << "\nSchemes populated after " << num_passes << " passes through the Rules." << endl << endl;
+		// return out.str();
+		return parse_rules();
 	}
 
 	string evaluate_all(){

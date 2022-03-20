@@ -14,6 +14,15 @@ private:
     Scheme scheme;
     set<Tuple> tuples;
 
+    bool contains(vector<int> vect, int item){
+        for(int i: vect){
+            if(i==item){
+                return true;
+            }
+        }
+        return false;
+    }
+
     bool contains(vector<string> vect, string item){
         for(string s: vect){
             if(s==item){
@@ -54,13 +63,10 @@ public:
         for (unsigned left_index = 0; left_index < left_scheme.size(); left_index++) {
             const string& left_name = left_scheme.at(left_index);
             const string& left_value = left_tuple.at(left_index);
-            cout << "left name: " << left_name << " value: " << left_value << endl;
             for (unsigned right_index = 0; right_index < right_scheme.size(); right_index++) {
                 const string& right_name = right_scheme.at(right_index);
                 const string& right_value = right_tuple.at(right_index);
-                cout << "\tright name: " << right_name << " value: " << right_value << endl;
                 if(left_name == right_name && left_value != right_value){
-                    cout << "\t\t^^ Not joinable." << endl;
                     return false;
                 }
             }
@@ -109,11 +115,14 @@ public:
         return result;
     }
 
-    Relation projection(vector<string> cols){
+    Relation projection(vector<string>& cols, vector<int> ignore = {}){
         cols = get_unique(cols);
         vector<unsigned int> indices;
         for(string col : cols){
             for(unsigned int i = 0; i < scheme.size(); i++){
+                if(contains(ignore,i)){
+                    continue;
+                }
                 if(scheme.at(i) == col){
                     indices.push_back(i);
                     break;
@@ -173,9 +182,7 @@ public:
 
         // for each tuple, add it to the relation, if they are joinable
         for(const Tuple& left_tuple : tuples){
-            cout << "left tuple: " << left_tuple.toString(left_scheme) << endl;
             for(const Tuple& right_tuple : r.get_tuples()){
-                cout << "\tright tuple: " << right_tuple.toString(right_scheme) << endl;
                 if(joinable(left_scheme, right_scheme, left_tuple, right_tuple)){
                     joined.add_tuple(join_tuples(left_scheme, right_scheme, left_tuple, right_tuple));
                 }
