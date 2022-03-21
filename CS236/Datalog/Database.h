@@ -13,6 +13,16 @@ private:
 	vector<Relation> family;
 	Datalog_Program program;
 	bool success;
+	
+	// I thought this would fix my problem, but it's not
+	int get_family_index(string name){
+		for(unsigned int i = 0; i < family.size(); i++){
+			if(name == family.at(i).get_name()){
+				return i;
+			}
+		}
+		return -1;
+	}
 
 	Relation& get_relation(string name){
 		for(unsigned int i = 0; i < family.size(); i++){
