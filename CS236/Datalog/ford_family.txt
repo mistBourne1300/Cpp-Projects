@@ -1,0 +1,491 @@
+### this doesn’t work exactly as the prolog version, but i'm trying to get it to work
+
+Schemes:
+	male(m)
+	female(f)
+	parent(p,c)
+	wedded(s1,s2)
+	married(s1,s2)
+	husband(h,w)
+	wife(w,h)
+	mother(m,c)
+	father(f,c)
+	sibling(s1,s2)
+	brother(b,s2)
+	sister(s,s2)
+	son(s,p)
+	daughter(d,p)
+	grandparent(g,gc)
+	grandmother(gm,gc)
+	grandfather(gf,gc)
+	cousin(c1,c2)
+	unclebb(u,n)
+	auntbb(a,n)
+	uncleil(u,n)
+	auntil(a,n)
+	uncle(u,n)
+	aunt(a,n)
+	pibling(p,n)
+	nibling(n,p)
+	niece(n,p)
+	nephew(n,p)
+	predecessor(p,c)
+	ncousin(c1,c2)
+
+Facts:
+	
+
+############## males
+
+#immediate family
+male('chase ford').
+male('kaden ford').
+male('russ ford').
+
+#grandfathers/step grandfathers
+male('duane allred').
+male('stan ford').
+male('warren miller').
+
+# great* grandfathers
+male('harvey ford').
+male('sydney willes').
+male('golden allred').
+male('delawn diderickson').
+
+male('alfred ford jr.').
+male('john pickering').
+male('john willes').
+male('peter o hansen').
+male('issac allred').
+male('edward leavitt').
+male('ezra diderickson').
+male('peter nelson').
+
+male('alfred ford sr.').
+male('william boren jr.').
+male('william pickering').
+male('charles cloward').
+male('william willes').
+male('william winn').
+male('peter p hansen').
+male('william leyshon').
+male('james allred').
+male('archibald anderson').
+male('thomas leavitt').
+male('robert leishman').
+male('nels diderickson').
+male('harrison lewis').
+male('rasmus nielson').
+male('james whitaker').
+
+#moms brothers
+male('brian allred'). 
+male('bruce allred').
+male('doug allred').
+male('lynn allred').
+
+#dads brothers
+male('alan ford').
+male('gary ford').
+
+#dads brothers in law
+male('brad hills').
+male('chett thacker').
+male('steve meredith').
+male('jim bowers').
+male('richard chapman').
+
+#paternal male cousins
+male('kurt meredith').
+male('nate meredith').
+
+male('trey hills').
+male('greg hills').
+male('matt hills').
+male('tyler hills').
+
+male('alex ford').
+
+male('spencer ford').
+male('david ford').
+male('brett ford').
+
+male('bravon thacker').
+
+#maternal male cousins
+male('dallas allred').
+male('austin allred').
+
+male('steven allred').
+male('ryan allred').
+male('aaron allred').
+male('kevin allred').
+
+male('tyler allred').
+
+
+############## females
+
+#immediate family
+female('sheri ford').
+
+#grandmothers/step grandmothers
+female('margie allred').
+female('jeanette miller').
+female('debbie ford').
+
+# great* grandmothers
+female('neva pickering').
+female('elma hansen').
+female('josephine leavitt').
+female('leola nelson').
+
+female('molinda boren').
+female('martha cloward').
+female('christina winn').
+female('emily leyshon').
+female('helena anderson').
+female('ellen leishman').
+female('alice lewis').
+female('frances whitaker').
+
+female('lillian allred').
+female('temperance wall').
+female('susanna nebeker').
+female('emma moesser').
+female('alzina lott').
+female('martha evans').
+female('olena olsen').
+female('emily crofts').
+female('mary vance').
+female('sarah rees').
+female('ann jenkins').
+female('catherine duncan').
+female('jennie bromberg').
+female('alice mikesell').
+female('gunild olsen').
+female('mary mcminn').
+
+#moms sisters in law
+female('alena allred').
+female('donna allred').
+female('barbara allred').
+female('natalie allred').
+
+female('wendy').
+
+#dads sisters
+female('suzanne meredith').
+female('cindy hills').
+female('kjirsten chapman').
+female('miriam thacker').
+female('melinda bowers').
+
+#dads sisters in law
+female('allyson ford').
+female('nanette ford').
+
+#paternal female cousins
+female('sara meredith').
+female('mckell meredith').
+
+female('brittany ford').
+female('brianna ford').
+
+female('tana boren').
+female('briley boren').
+female('mikayla boren').
+female('maddie bowers').
+
+female('emily ford').
+female('charity ford').
+
+female('kjirsten thacker').
+
+# maternal female cousins
+female('madison allred').
+female('mckenna allred').
+female('ami allred').
+female('kayla allred').
+female('rebecca allred').
+female('ashley allred').
+female('amanda allred').
+
+
+############## define parent relationships
+
+#immediate family
+parent('sheri ford','chase ford').
+parent('sheri ford','kaden ford').
+parent('russ ford', 'chase ford').
+parent('russ ford', 'kaden ford').
+
+#dads family
+parent('jeanette miller', 'russ ford').
+parent('jeanette miller', 'gary ford').
+parent('jeanette miller', 'alan ford').
+parent('jeanette miller', 'suzanne meredith').
+parent('jeanette miller', 'cindy hills').
+parent('jeanette miller', 'kjirsten chapman').
+parent('jeanette miller', 'miriam thacker').
+
+parent('stan ford', 'russ ford').
+parent('stan ford', 'gary ford').
+parent('stan ford', 'alan ford').
+parent('stan ford', 'suzanne meredith').
+parent('stan ford', 'cindy hills').
+parent('stan ford', 'kjirsten chapman').
+parent('stan ford', 'miriam thacker').
+
+ #paternal cousins
+parent('suzanne meredith', 'kurt meredith').
+parent('suzanne meredith', 'sara meredith').
+parent('suzanne meredith', 'nate meredith').
+parent('suzanne meredith', 'mckell meredith').
+parent('steve meredith', 'kurt meredith').
+parent('steve meredith', 'sara meredith').
+parent('steve meredith', 'nate meredith').
+parent('steve meredith', 'mckell meredith').
+
+parent('brad hills', 'trey hills').
+parent('brad hills', 'greg hills').
+parent('brad hills', 'matt hills').
+parent('brad hills', 'tyler hills').
+parent('cindy hills', 'trey hills').
+parent('cindy hills', 'greg hills').
+parent('cindy hills', 'matt hills').
+parent('cindy hills', 'tyler hills').
+
+parent('alan ford', 'brittany ford').
+parent('alan ford', 'brianna ford').
+parent('alan ford', 'alex ford').
+parent('nanette ford', 'brittany ford').
+parent('nanette ford', 'brianna ford').
+parent('nanette ford', 'alex ford').
+
+parent('jim bowers', 'tana boren').
+parent('jim bowers', 'briley boren').
+parent('jim bowers', 'mikayla boren').
+parent('jim bowers', 'maddie bowers').
+parent('melinda bowers', 'tana boren').
+parent('melinda bowers', 'briley boren').
+parent('melinda bowers', 'mikayla boren').
+parent('melinda bowers', 'maddie bowers').
+
+parent('gary ford', 'emily ford').
+parent('gary ford', 'spencer ford').
+parent('gary ford', 'charity ford').
+parent('gary ford', 'david ford').
+parent('gary ford', 'brett ford').
+parent('allyson ford', 'emily ford').
+parent('allyson ford', 'spencer ford').
+parent('allyson ford', 'charity ford').
+parent('allyson ford', 'david ford').
+parent('allyson ford', 'brett ford').
+
+parent('miriam thacker', 'bravon thacker').
+parent('miriam thacker', 'kjirsten thacker').
+parent('chett thacker', 'bravon thacker').
+parent('chett thacker', 'kjirsten thacker').
+
+#moms family
+parent('margie allred', 'sheri ford').
+parent('margie allred', 'brian allred').
+parent('margie allred', 'bruce allred').
+parent('margie allred', 'lynn allred').
+parent('margie allred', 'doug allred').
+
+parent('duane allred', 'sheri ford').
+parent('duane allred', 'brian allred').
+parent('duane allred', 'bruce allred').
+parent('duane allred', 'lynn allred').
+parent('duane allred', 'doug allred').
+
+# maternal cousins
+parent('brian allred', 'madison allred').
+parent('brian allred', 'mckenna allred').
+parent('brian allred', 'dallas allred').
+parent('brian allred', 'austin allred').
+parent('alena allred', 'madison allred').
+parent('alena allred', 'mckenna allred').
+parent('alena allred', 'dallas allred').
+parent('alena allred', 'austin allred').
+
+parent('doug allred', 'ami allred').
+parent('doug allred', 'kayla allred').
+parent('barbara allred', 'ami allred').
+parent('barbara allred', 'kayla allred').
+
+parent('bruce allred', 'steven allred').
+parent('bruce allred', 'rebecca allred').
+parent('bruce allred', 'ryan allred').
+parent('bruce allred', 'aaron allred').
+parent('bruce allred', 'kevin allred').
+parent('donna allred', 'steven allred').
+parent('donna allred', 'rebecca allred').
+parent('donna allred', 'ryan allred').
+parent('donna allred', 'aaron allred').
+parent('donna allred', 'kevin allred').
+
+parent('lynn allred', 'ashley allred').
+parent('lynn allred', 'tyler allred').
+parent('lynn allred', 'amanda allred').
+parent('wendy', 'ashley allred').
+parent('wendy', 'tyler allred').
+parent('wendy', 'amanda allred').
+
+# great grandparents
+parent('harvey ford', 'stan ford').
+parent('neva pickering', 'stan ford').
+parent('sidney willes', 'jeanette miller').
+parent('elma hansen', 'jeanette miller').
+parent('golden allred', 'duane allred').
+parent('josephine leavitt', 'duane allred').
+parent('delawn diderickson', 'margie allred').
+parent('leola nelson', 'margie allred').
+
+parent('alfred ford jr.','harvey ford').
+parent('molinda boren', 'harvey ford').
+parent('john pickering', 'neva pickering').
+parent('martha cloward', 'neva pickering').
+parent('john willes', 'sidney willes').
+parent('christina winn', 'sidney willes').
+parent('peter o hansen', 'elma hansen').
+parent('emily leyshon', 'elma hansen').
+parent('issac allred', 'golden allred').
+parent('helena anderson', 'golden allred').
+parent('edward leavitt', 'josephine leavitt').
+parent('ellen leishman', 'josephine leavitt').
+parent('ezra diderickson', 'delawn diderickson').
+parent('alice lewis', 'delawn diderickson').
+parent('peter nelson', 'leola nelson').
+parent('frances whitaker', 'leola nelson').
+
+parent('alfred ford sr.', 'alfred ford jr.').
+parent('lillian allred', 'alfred ford jr.').
+parent('william boren', 'molinda boren').
+parent('temperance wall', 'molinda boren').
+parent('william pickering', 'john pickering').
+parent('susanna nebeker', 'john pickering').
+parent('charles cloward', 'martha cloward').
+parent('emma moesser', 'martha cloward').
+parent('william willes', 'john willes').
+parent('alzina lott', 'john willes').
+parent('william winn', 'christina winn').
+parent('martha evans', 'christina winn').
+parent('peter p hansen', 'peter o hansen').
+parent('olena olsen', 'peter o hansen').
+parent('william leyshon', 'emily leyshon').
+parent('emily crofts', 'emily leyshon').
+parent('james allred', 'issac allred').
+parent('mary vance', 'issac allred').
+parent('archibald anderson', 'helena anderson').
+parent('sarah rees', 'helena anderson').
+parent('thomas leavitt', 'edward leavitt').
+parent('ann jenkins', 'edward leavitt').
+parent('robert leishman', 'ellen leishman').
+parent('catherine duncan', 'ellen leishman').
+parent('nels diderickson', 'ezra diderickson').
+parent('jennie bromberg', 'ezra diderickson').
+parent('harrison lewis', 'alice lewis').
+parent('alice mikesell', 'alice lewis').
+parent('rasmus nielson', 'peter nelson').
+parent('gunild olsen', 'peter nelson').
+parent('james whitaker', 'frances whitaker').
+parent('mary mcminn', 'frances whitaker').
+
+########### married relationships
+
+#parents and grandparents
+wedded('sheri ford','russ ford').
+wedded('margie allred', 'duane allred').
+wedded('stan ford', 'debbie ford').
+wedded('warren miller', 'jeanette miller').
+
+#aunts and uncles
+wedded('alena allred', 'brian allred').
+wedded('barbara allred', 'doug allred').
+wedded('donna allred', 'bruce allred').
+wedded('natalie allred', 'lynn allred').
+
+wedded('suzanne meredith', 'steve meredith').
+wedded('cindy hills', 'brad hills').
+wedded('alan ford', 'nanette ford').
+wedded('jim bowers', 'melinda bowers').
+wedded('gary ford', 'allyson ford').
+wedded('miriam thacker', 'chett thacker').
+wedded('richard chapman', 'kirsten chapman').
+
+# great* grandparents
+wedded('harvey ford', 'neva pickering').
+wedded('sidney willes', 'elma hansen').
+wedded('golden allred', 'josephine leavitt').
+wedded('delawn diderickson', 'leola nelson').
+
+wedded('alfred ford jr.', 'molinda boren').
+wedded('john pickering', 'martha cloward').
+wedded('john willes', 'christina winn').
+wedded('peter o hansen', 'emily leyshon').
+wedded('issac allred', 'helena anderson').
+wedded('edward leavitt', 'ellen leishman').
+wedded('ezra diderickson', 'alice lewis').
+wedded('peter nelson', 'frances whitaker').
+
+wedded('alfred ford sr.', 'lillian allred').
+wedded('william boren', 'temperance wall').
+wedded('william pickering', 'susanna nebeker').
+wedded('charles cloward', 'emma moesser').
+wedded('william willes', 'alzina lott').
+wedded('william winn', 'martha evans').
+wedded('peter p hansen', 'olena olsen').
+wedded('william leyshon', 'emily crofts').
+wedded('james allred', 'mary vance').
+wedded('archibald anderson', 'sarah rees').
+wedded('thomas leavitt', 'ann jenkins').
+wedded('robert leishman', 'catherine duncan').
+wedded('nels diderickson', 'jennie bromberg').
+wedded('harrison lewis', 'alice mikesell').
+wedded('rasmus nielson', 'gunild olsen').
+wedded('james whitaker', 'mary mcminn').
+
+Rules:
+
+	married(X,Y) :- wedded(Y,X).
+	married(X,Y) :- wedded(X,Y).
+	husband(X,Y) :- married(X,Y) , male(X).
+	wife(X,Y) :- married(X,Y) , female(X).
+	mother(X,Y) :- parent(X,Y), female(X).
+	father(X,Y) :- parent(X,Y), male(X).
+	sibling(X,Y) :- mother(Z,X), mother(Z,Y), father(W,X), father(W,Y).
+	brother(X,Y) :- male(X), sibling(X,Y).
+	sister(X,Y) :- female(X), sibling(X,Y).
+	son(X,Y) :- parent(Y,X), male(X).
+	grandparent(X,Y) :- parent(X,Z),parent(Z,Y).
+	grandmother(X,Z) :- grandparent(X,Z), female(X).
+	grandfather(X,Z) :- grandparent(X,Z), male(X).
+	unclebb(X,Y) :- brother(X,Z), parent(Z,Y).
+	auntbb(X,Y) :- sister(X,Z), parent(Z,Y).
+	uncleil(X,Y) :- married(X,Z), auntbb(Z,Y).
+	auntil(X,Y) :- married(X,Z), unclebb(Z,Y).
+	uncle(X,Y) :- unclebb(X,Y).
+	uncle(X,Y) :- uncleil(X,Y).
+	aunt(X,Y) :- auntbb(X,Y).
+	aunt(X,Y) :- auntil(X,Y).
+	pibling(X,Y) :- uncle(X,Y).
+	pibling(X,Y) :- aunt(X,Y).
+	predecessor(X,Y) :- parent(X,Y).
+	predecessor(X,Y) :- parent(X,Z), predecessor(Z,Y).
+	nibling(X,Y) :- pibling(Y,X).
+	niece(X,Y) :- female(X), nibling(X,Y).
+	nephew(X,Y) :- male(X), nibling(X,Y).
+	ncousin(X,Y) :- predecessor(Z,X), predecessor(Z,Y).
+
+Queries:
+	#nibling(who,'sheri ford')?
+	#married(who,'sheri ford')?
+	#married(who,'kaden ford')?
+	#uncle(who,'chase ford')?
+	#predecessor(who,'chase ford')?
+	ncousin(who,'chase ford')?
+	

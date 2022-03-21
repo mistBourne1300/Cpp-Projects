@@ -70,10 +70,12 @@ private:
 					rule_relations[0] = rule_relations.at(0).join(back);
 				}
 
+
 				// for ease of readability, create new relation result
 				// and clear the rule relations vector for better(ish) spatial complexity
 				Relation result = rule_relations.at(0);
 				rule_relations.clear();
+
 				
 				// for each parameter in the head
 				// push back its string to the list of columne to project
@@ -81,8 +83,10 @@ private:
 					cols.push_back(param.toString());
 				}
 
+
 				// find the projection
 				result = result.projection(cols);
+
 
 				// get the appropriate relation to add to
 				// using get_relation()
@@ -147,6 +151,7 @@ private:
 			}
 			eval = eval.select_similar(indices);
 		}
+
 
 		if(has_variable){
 			eval = eval.rename(old, rename);
