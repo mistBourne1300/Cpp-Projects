@@ -12,7 +12,7 @@ class Database {
 private:
 	vector<Relation> family;
 	Datalog_Program program;
-	bool success;
+	bool success = false;
 	
 	// I thought this would fix my problem, but it's not
 	int get_family_index(string name){
@@ -47,7 +47,7 @@ private:
 	// terminate when no new tuples are added to any relation in the family.
 	string parse_rules(){
 		stringstream out;
-		bool done;
+		bool done = false;
 		vector<Relation> rule_relations;
 		vector<string> cols;
 		int counter = 0;
