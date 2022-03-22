@@ -249,7 +249,9 @@ public:
 	}
 
 	string evaluate_all(){
-		return evaluate_rules() + evaluate_queries();
+		string evaluation = evaluate_rules();
+		evaluation += evaluate_queries();
+		return evaluation;
 	}
 	
 	vector<Relation> get_relations() {return family;}
