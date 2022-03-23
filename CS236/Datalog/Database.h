@@ -124,6 +124,7 @@ private:
 			counter++;
 		}while(!done);
 		out << "\nSchemes populated after " << counter << " passes through the Rules." << endl << endl;
+		// cout << "Rule Eval:\n" << toString();
 		return out.str();
 	}
 
@@ -212,6 +213,7 @@ public:
 	}
 
 	string evaluate_queries(){
+		// cout << "Query Eval:\n" << toString();
 		stringstream out;
 		out << "Query Evaluation" << endl;
 		for(Predicate query : program.get_queries()){
@@ -256,4 +258,12 @@ public:
 	
 	vector<Relation> get_relations() {return family;}
 	bool get_success() {return success;}
+	string toString(){
+		stringstream out;
+		for(Relation& r : family){
+			out << r.get_name() << ":" << endl;
+			out << r.toString() << endl << endl;
+		}
+		return out.str();
+	}
 };
