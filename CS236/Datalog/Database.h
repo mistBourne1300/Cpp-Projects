@@ -255,9 +255,31 @@ public:
 		evaluation += evaluate_queries();
 		return evaluation;
 	}
+
+	static Graph make_graph(const vector<Rule>& rules){
+		Graph graph(rules.size());
+		for(unsigned int from_id = 0; from_id < rules.size(); from_id++){
+			const Rule& from_rule = rules.at(from_id);
+			// cout << "from rule R" << from_id << ": " << from_rule.toString() << endl;
+			for(unsigned int pred = 0; pred < from_rule.size(); pred++){
+				const Predicate& body_pred = from_rule.at(pred);
+				// cout << "\tfrom body predicate: " << body_pred.toString() << endl;
+				for(unsigned int to_id = 0; to_id < rules.size(); to_id++){
+					const Rule& to_rule = rules.at(to_id);
+					// cout << "\t\tto rule R" << to_id << ": " << to_rule.toString() << endl;
+					if(body_pred.get_name() == to_rule.get_head().get_name()){
+						// cout << "\t\t\tdependency found: (R" << from_id << ",R" << to_id << ")" << endl;
+						graph.add_edge(from_id, to_id);
+					}
+				}
+			}
+		}
+		return graph;
+	}
 	
 	vector<Relation> get_relations() {return family;}
 	bool get_success() {return success;}
+	
 	string toString(){
 		stringstream out;
 		for(Relation& r : family){

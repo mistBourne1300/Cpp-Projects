@@ -71,7 +71,7 @@ public:
 		return line;
 	}
 
-	string get_value(){
+	string get_value() const{
 		return tolkien;
 	}
 	

@@ -15,7 +15,7 @@ private:
 public:
 	Predicate(string name) : name(name){}
 
-	string get_name() {return name;}
+	string get_name() const {return name;}
 
 	vector<Parameter> get_parameters() {return parameters;}
 
@@ -23,7 +23,7 @@ public:
 
 	void add_all(vector<Parameter> p) {parameters = p;}
 
-	string toString(){
+	string toString() const{
 		stringstream ss;
 		ss << name << "(";
 		unsigned int size = parameters.size();

@@ -19,7 +19,7 @@ public:
 
 	void replace_all(vector<Predicate> b) {body = b;}
 
-	string toString(){
+	string toString() const{
 		stringstream ss;
 		ss << head.toString() << " :- ";
 		unsigned int size = body.size();
@@ -34,5 +34,7 @@ public:
 	}
 
 	vector<Predicate> get_body() {return body;}
-	Predicate get_head() {return head;}
+	Predicate get_head() const {return head;}
+	unsigned int size() const {return body.size();}
+	Predicate at(unsigned int i) const {return body.at(i);}
 };

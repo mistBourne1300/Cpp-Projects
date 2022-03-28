@@ -11,6 +11,7 @@ using namespace std;
 # include "Token.h"
 # include "Predicate.h"
 # include "Rule.h"
+# include "Graph.h"
 
 /*Success!
 Schemes(2):

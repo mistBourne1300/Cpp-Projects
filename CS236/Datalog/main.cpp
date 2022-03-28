@@ -9,8 +9,40 @@ using namespace std;
 # include "Tuple.h"
 # include "Relation.h"
 # include "Database.h"
+# include "Node.h"
+# include "Graph.h"
+
+int main() {
+
+  // predicate names for fake rules
+  // first is name for head predicate
+  // second is names for body predicates
+  pair<string,vector<string>> ruleNames[] = {
+    { "A", { "B", "C" } },
+    { "B", { "A", "D" } },
+    { "B", { "B" } },
+    { "E", { "F", "G" } },
+    { "E", { "E", "F" } },
+  };
+
+  vector<Rule> rules;
+
+  for (auto& rulePair : ruleNames) {
+    string headName = rulePair.first;
+    Rule rule = Rule(Predicate(headName));
+    vector<string> bodyNames = rulePair.second;
+    for (auto& bodyName : bodyNames)
+      rule.add_body(Predicate(bodyName));
+    rules.push_back(rule);
+  }
+
+  Graph graph = Database::make_graph(rules);
+  cout << graph.toString();
+
+}
 
 
+// What about that shadowed area? That is old code. Never venture there, my son. 
 // int main() {
 
 // 	Relation studentRelation("students", Scheme( {"ID", "Name", "Major"} ));
@@ -76,21 +108,21 @@ using namespace std;
 // }
 
 
-// What about that shadowed area? That is old code. Never venture there, my son. 
-int main(int argc, char *argv[]){
-	if(argc < 2){
-		cout << "database requires at least one argument <filename>" << endl;
-		return 1;
-	}
+// main function for project 4
+// int main(int argc, char *argv[]){
+// 	if(argc < 2){
+// 		cout << "database requires at least one argument <filename>" << endl;
+// 		return 1;
+// 	}
 
-	Database death_star(argv[1]);
-	if(!death_star.get_success()){
-		cout << "failed to parse file. exiting." << endl;
-		return 1;
-	}
-	cout << death_star.evaluate_all();
+// 	Database death_star(argv[1]);
+// 	if(!death_star.get_success()){
+// 		cout << "failed to parse file. exiting." << endl;
+// 		return 1;
+// 	}
+// 	cout << death_star.evaluate_all();
 
-}
+// }
 
 
  

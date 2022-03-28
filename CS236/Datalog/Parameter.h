@@ -12,7 +12,7 @@ private:
 
 public:
 	Parameter(Token v) : value(v){}
-	string toString() {return value.get_value();}
+	string toString() const {return value.get_value();}
 	void set_value(Token v) {value = v;}
 	Token get_value() {return value;}
 	bool operator<(Parameter& right){
