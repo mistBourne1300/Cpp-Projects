@@ -256,6 +256,13 @@ public:
 		return evaluation;
 	}
 
+
+	string evaluate_SCC(){
+		stack<int> postorder;
+		set<int> searched;
+		Graph graph = make_graph();
+	}
+
 	static Graph make_graph(const vector<Rule>& rules){
 		Graph graph(rules.size());
 		for(unsigned int from_id = 0; from_id < rules.size(); from_id++){

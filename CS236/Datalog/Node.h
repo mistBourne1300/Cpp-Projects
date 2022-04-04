@@ -12,6 +12,9 @@ public:
 	void addEdge(int adjacentNodeID) {
 		adjacentNodeIDs.insert(adjacentNodeID);
 	}
+	set<int> get_adjacent() const{
+		return adjacentNodeIDs;
+	}
 	string toString() const{
 		stringstream out;
 		int counter = 1;
