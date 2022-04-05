@@ -12,74 +12,91 @@ using namespace std;
 # include "Node.h"
 # include "Graph.h"
 
-int main() {
+// main function for project 5
+int main(int argc, char *argv[]){
+	if(argc < 2){
+		cout << "database requires at least one argument <filename>" << endl;
+		return 1;
+	}
 
-  // predicate names for fake rules
-  // first is name for head predicate
-  // second is names for body predicates
-  pair<string,vector<string>> ruleNames[] = {
-    { "A", { "B", "C" } },
-    { "B", { "A", "D" } },
-    { "B", { "B" } },
-    { "E", { "F", "G" } },
-    { "E", { "E", "F" } },
-  };
-
-  vector<Rule> rules;
-
-  for (auto& rulePair : ruleNames) {
-    string headName = rulePair.first;
-    Rule rule = Rule(Predicate(headName));
-    vector<string> bodyNames = rulePair.second;
-    for (auto& bodyName : bodyNames)
-      rule.add_body(Predicate(bodyName));
-    rules.push_back(rule);
-  }
-  stack<int> postorder;
-  set<int> searched;
-  Graph graph = Database::make_graph(rules);
-  cout << graph.toString() << endl;
-  Graph reversed = graph.reverse();
-  cout << "reversed:\n" << reversed.toString() << endl;
-  map<int,Node> nodes = reversed.get_Node_map();
-  for(unsigned int i = 0; i < nodes.size(); i++){
-    reversed.DFS_postorder(postorder, nodes[i], searched, i);
-  }
-
-  // get strongly connected components
-  searched.clear();
-  vector<set<int> > strongly_connected_components;
-
-  cout << "postorder: ";
-  set<int> SCC;
-  while(!postorder.empty()){
-    cout << postorder.top() << " ";
-    // if the searched set doesn't have the top of the postorder
-    // create a strongly connected component
-    // and apppend it to the vector of the SCC's
-    if(searched.count(postorder.top()) == 0){
-      SCC.clear();
-      nodes = graph.get_Node_map();
-      graph.DFS_SCC(SCC, nodes[postorder.top()], searched, postorder.top());
-      strongly_connected_components.push_back(SCC);
-    }
-
-    postorder.pop();
-  }
-  cout << endl;
-
-  cout << "strongly connected components:" << endl;
-  int counter = 0;
-  for(set<int> comp: strongly_connected_components){
-    cout << "component " << counter << ": ";
-    for(int i: comp){
-      cout << "R" << i << " ";
-    }
-    cout << endl;
-    counter++;
-  }
+	Database death_star(argv[1]);
+	if(!death_star.get_success()){
+		cout << "failed to parse file. exiting." << endl;
+		return 1;
+	}
+	cout << death_star.evaluate_SCC();
 
 }
+
+
+// int main() {
+
+//   // predicate names for fake rules
+//   // first is name for head predicate
+//   // second is names for body predicates
+//   pair<string,vector<string>> ruleNames[] = {
+//     { "A", { "B", "C" } },
+//     { "B", { "A", "D" } },
+//     { "B", { "B" } },
+//     { "E", { "F", "G" } },
+//     { "E", { "E", "F" } },
+//   };
+
+//   vector<Rule> rules;
+
+//   for (auto& rulePair : ruleNames) {
+//     string headName = rulePair.first;
+//     Rule rule = Rule(Predicate(headName));
+//     vector<string> bodyNames = rulePair.second;
+//     for (auto& bodyName : bodyNames)
+//       rule.add_body(Predicate(bodyName));
+//     rules.push_back(rule);
+//   }
+//   stack<int> postorder;
+//   set<int> searched;
+//   Graph graph = Database::make_graph(rules);
+//   cout << graph.toString() << endl;
+//   Graph reversed = graph.reverse();
+//   cout << "reversed:\n" << reversed.toString() << endl;
+//   map<int,Node> nodes = reversed.get_Node_map();
+//   for(unsigned int i = 0; i < nodes.size(); i++){
+//     reversed.DFS_postorder(postorder, nodes[i], searched, i);
+//   }
+
+//   // get strongly connected components
+//   searched.clear();
+//   vector<set<int> > strongly_connected_components;
+
+//   cout << "postorder: ";
+//   set<int> SCC;
+//   while(!postorder.empty()){
+//     cout << postorder.top() << " ";
+//     // if the searched set doesn't have the top of the postorder
+//     // create a strongly connected component
+//     // and apppend it to the vector of the SCC's
+//     if(searched.count(postorder.top()) == 0){
+//       SCC.clear();
+//       nodes = graph.get_Node_map();
+//       graph.DFS_SCC(SCC, nodes[postorder.top()], searched, postorder.top());
+//       strongly_connected_components.push_back(SCC);
+//     }
+
+//     postorder.pop();
+//   }
+//   cout << endl;
+
+//   cout << "strongly connected components:" << endl;
+//   int counter = 0;
+//   for(set<int> comp: strongly_connected_components){
+//     cout << "component " << counter << ": ";
+//     for(int i: comp){
+//       cout << "R" << i << " ";
+//     }
+//     cout << endl;
+//     counter++;
+//   }
+
+// }
 
 
 // What about that shadowed area? That is old code. Never venture there, my son. 

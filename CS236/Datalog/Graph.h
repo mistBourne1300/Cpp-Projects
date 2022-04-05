@@ -67,7 +67,7 @@ public:
 		}
 	}
 
-	map<int,Node> get_Node_map(){
+	map<int,Node> get_Node_map() const{
 		return nodes;
 	}
 	
