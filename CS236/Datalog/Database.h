@@ -260,7 +260,50 @@ public:
 	string evaluate_SCC(){
 		stack<int> postorder;
 		set<int> searched;
-		Graph graph = make_graph();
+		Graph graph = make_graph(program.get_rules());
+		cout << graph.toString() << endl;
+		Graph reversed = graph.reverse();
+		cout << "reversed:\n" << reversed.toString() << endl;
+		map<int,Node> nodes = reversed.get_Node_map();
+		
+		// call DFS postorder on the reversed graph,
+		// which will add the nodes to postorder in place
+		for(unsigned int i = 0; i < nodes.size(); i++){
+			reversed.DFS_postorder(postorder, nodes[i], searched, i);
+		}
+
+		// get strongly connected components
+		cout << "postorder: ";
+		searched.clear();
+		vector<set<int> > strongly_connected_components;
+		set<int> SCC;
+		while(!postorder.empty()){
+			cout << postorder.top() << " ";
+			// if the searched set doesn't have the top of the potorder
+			// create a strongly connecteed component
+			// and append it the the vector of the SCC's
+			if(searched.count(postorder.top()) == 0){
+				SCC.clear();
+				nodes = graph.get_Node_map();
+				graph.DFS_SCC(SCC,nodes[postorder.top()], searched, postorder.top());
+				strongly_connected_components.push_back(SCC);
+			}
+			postorder.pop();
+
+		}
+
+		cout << endl;
+
+		cout << "strongly connected components:" << endl;
+		int counter = 0;
+		for(set<int> comp: strongly_connected_components){
+			cout << "component " << counter << ": ";
+			for(int i: comp){
+				cout << "R" << i << " ";
+			}
+			cout << endl;
+			counter++;
+		}
 	}
 
 	static Graph make_graph(const vector<Rule>& rules){
