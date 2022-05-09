@@ -149,11 +149,11 @@ int main() {
     double quickSortTime = algorithmComputeTime.count();
     cout << "}" << endl;
     cout << "Quick sort took " << quickSortTime << " seconds." << endl;
-    /*cout << "Double check that QuickSort() worked:" << endl;
-    for (int i : vectorToSort){
-        cout << i << " ";
-    }
-    cout << endl;*/
+    // cout << "Double check that QuickSort() worked:" << endl;
+    // for (int i : vectorToSort){
+    //     cout << i << " ";
+    // }
+    // cout << endl;
     cout << "*********************************************************************************" << endl << endl;
 
 
@@ -324,6 +324,7 @@ double InsertionSort(vector<int> vectorToSort){
 }
 
 int Partition(vector<int>& vectorToSort, int low, int high){
+    // cout << "partitioning lower: " << low << " upper: " << high << endl;
     int l, h, midpoint, pivot, temp;
     bool done;
 
